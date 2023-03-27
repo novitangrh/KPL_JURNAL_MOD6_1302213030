@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,8 @@ namespace modul6_1302213030
 
         public SayaTubeVideo(String title)
         {
+            Contract.Requires(title.Length <= 200);
+            Contract.Requires(title != null);
             this.title = title;
             Random random = new Random();
             id = random.Next(10000, 99999);
@@ -23,7 +26,19 @@ namespace modul6_1302213030
 
         public void increasePlayCount(int playCount)
         {
-            this.playCount += playCount;
+            Contract.Requires(playCount < 25000000);
+            Contract.Requires(playCount < 0);
+            try
+            {
+                checked
+                {
+                    this.playCount += playCount;
+                }
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Maximum");
+            }
         }
 
         public void PrintVideoDetails()

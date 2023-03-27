@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +16,8 @@ namespace modul6_1302213030
 
         public SayaTubeUser(String username)
         {
+            Contract.Requires(username.Length <= 100);
+            Contract.Requires(username != null);
             this.username = username;
             this.uploadedVideos = new List<SayaTubeVideo>();
 
@@ -31,16 +35,28 @@ namespace modul6_1302213030
 
         public void AddVideo(SayaTubeVideo newVideo)
         {
+            Debug.Assert(newVideo != null);
+            Debug.Assert(newVideo.getPlayCount() < 1000000000000);
             uploadedVideos.Add(newVideo);
         }
 
         public void PrintAllVideoPlaycount()
         {
-            Console.WriteLine("User: " + username);
-            for(int i = 0; i < uploadedVideos.Count; i++)
+            try
             {
-                Console.WriteLine("Video " + (i + 1) + " judul: " + uploadedVideos[i].getTitle());
+                Console.WriteLine("User: " + username);
+                Debug.Assert(uploadedVideos.Count <= 8);
+                for (int i = 0; i < uploadedVideos.Count; i++)
+                {
+                    Console.WriteLine("Video " + (i + 1) + " judul: " + uploadedVideos[i].getTitle());
+                }
             }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+       
         }
     }
 

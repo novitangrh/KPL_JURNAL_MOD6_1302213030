@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using modul6_1302213030;
+using System.Diagnostics;
 
 class main {
     public static void Main(String[] args)
@@ -42,5 +43,14 @@ class main {
         video1.PrintVideoDetails();
         Console.WriteLine("");
         user.PrintAllVideoPlaycount();
+
+        for (int i = 0; i < 25000000; i += 25000000)
+        {
+            video1.increasePlayCount(25000000);
+        }
+        Console.WriteLine();
+        video1.PrintVideoDetails();
+    
+
     }
 }
